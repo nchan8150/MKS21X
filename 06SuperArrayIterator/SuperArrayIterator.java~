@@ -1,0 +1,26 @@
+import java.until.*
+public class SuperArrayIterator extends SuperArray {
+    public Iterator <String> iterator() {
+	return new SAIterator();
+    }
+
+    private class SAIterator implements Iterator<String> {
+	int current, end;
+
+	public SAIterator (int start, int stop) {
+	    current = start;
+	    end = stop;
+	}
+	
+	public String next() {
+	    if(hasNext()) {
+		current++;
+	    }
+	    else {
+		System.exit(0);
+	    }
+	    return 
+	    
+		
+
+	  

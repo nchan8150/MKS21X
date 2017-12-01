@@ -1,9 +1,13 @@
-//Worked with Il Kyu to figure it out
+import java.util.*;
 
 public class SuperArray{
     private int size;
     private String[] data;
 
+    public Iterator <String> iterator() {
+	return new SuperArrayIterator(0, data);
+    }
+    
     public SuperArray(){
 	data = new String[10];
 	size = 0;
