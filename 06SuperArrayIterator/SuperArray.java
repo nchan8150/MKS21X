@@ -5,9 +5,7 @@ public class SuperArray implements Iterable<String>{
     private String[] data;
 
     public Iterator <String> iterator() {
-	int i = 0;
-	SuperArray s = null;
-	return new SuperArrayIterator(i, s);
+	return new SuperArrayIterator(data, size);
     }
     
     public SuperArray(){

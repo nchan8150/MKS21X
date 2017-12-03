@@ -1,16 +1,17 @@
 import java.util.*;
 
 public class SuperArrayIterator implements Iterator<String> {
-    int current;
-    SuperArray data;
+    private int current = 0;
+    private String[] data;
+    private int size;
 
-    public SuperArrayIterator (int start, SuperArray data) {
-	current = start;
+    public SuperArrayIterator (String[] data, int size) {
+	this.size = size;
         this.data = data;
     }
 
     public boolean hasNext() {
-	return current <= data.size();
+	return current <= size;
     }
 	
     public String next() {
@@ -20,7 +21,11 @@ public class SuperArrayIterator implements Iterator<String> {
 	else {
 	    System.exit(0);
 	}
-	return data.get(current - 1);
+	return data[current - 1];
+    }
+
+    public void remove() {
+	throw new UnsupportedOperationException();
     }
 }
 
