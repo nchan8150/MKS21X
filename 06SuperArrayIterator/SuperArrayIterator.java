@@ -1,6 +1,6 @@
 import java.util.*;
 
-private class SuperArrayIterator implements Iterator<String> {
+public class SuperArrayIterator implements Iterator<String> {
     int current;
     SuperArray data;
 
@@ -20,7 +20,7 @@ private class SuperArrayIterator implements Iterator<String> {
 	else {
 	    System.exit(0);
 	}
-	return this.data[current - 1];
+	return data.get(current - 1);
     }
 }
 

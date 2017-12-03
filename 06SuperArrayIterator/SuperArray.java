@@ -1,11 +1,13 @@
 import java.util.*;
 
-public class SuperArray{
+public class SuperArray implements Iterable<String>{
     private int size;
     private String[] data;
 
     public Iterator <String> iterator() {
-	return new SuperArrayIterator(0, data);
+	int i = 0;
+	SuperArray s = null;
+	return new SuperArrayIterator(i, s);
     }
     
     public SuperArray(){
@@ -62,7 +64,7 @@ public class SuperArray{
     }
 
     private void resize(){
-	if(data.length + 1 == size){
+	if(data.length == size){
 	    String[] newData = new String [size * 2];
 	    for(int index = 0; index < size; index++){
 		newData[index] = data[index];
