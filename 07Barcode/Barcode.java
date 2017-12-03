@@ -1,5 +1,5 @@
 public class Barcode implements Comparable<Barcode>{
-    String zip;
+    private String zip;
 
     public Barcode (String zip) {
 	this.zip = zip;
