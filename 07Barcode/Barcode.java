@@ -2,12 +2,15 @@ public class Barcode implements Comparable<Barcode>{
     private String zip;
 
     public Barcode (String zip) {
-	if ((zip.length() != 5) || ((int)zip / (int)zip == 1)) {
+	if (zip.length() != 5) {
 	    throw new IllegalArgumentException();
 	}
-	else {
-	    this.zip = zip;
+	for (int x = 0; x < zip.length(); x++) {
+	    if((int)zip.charAt(x) - '0' < 0 || (int)zip.charAt(x) - '0' > 9) {
+		throw new IllegalArgumentException();
+	    }
 	}
+	this.zip = zip;
     }
 
     public String getZip() {
@@ -19,29 +22,22 @@ public class Barcode implements Comparable<Barcode>{
     }
 
     public static String toCode(String zip) {
-	if ((zip.length() != 5) || ((int)zip / (int)zip == 1)) {
+	if (zip.length() != 5) {
 	    throw new IllegalArgumentException();
 	}
-	else {
-	    String[] a = {"||:::", ":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":||::", "|:::|", "|::|:", "|:|::"};
-	    String ans  = "|";
-	    int checkSum = 0;
-	    for (int x = 0; x < zip.length(); x++) {
-		ans += a[(int)zip.charAt(x) - '0'];
-		checkSum += (int)zip.charAt(x)- '0';
+	for (int x = 0; x < zip.length(); x++) {
+	    if((int)zip.charAt(x) - '0' < 0 || (int)zip.charAt(x) - '0' > 9) {
+		throw new IllegalArgumentException();
 	    }
-	    return ans + a[checkSum % 10] + "|";
 	}
-    }
-
-    public String checkSum (String zip) {
 	String[] a = {"||:::", ":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":||::", "|:::|", "|::|:", "|:|::"};
-	    int checkSum = 0;
-	    for (int x = 0; x < zip.length(); x++) {
-		checkSum += (int)zip.charAt(x)- '0';
-	    }
-	    checkSum = checkSum % 10;
-	    return (String)checkSum;
+	String ans  = "|";
+	int checkSum = 0;
+	for (int x = 0; x < zip.length(); x++) {
+	    ans += a[(int)zip.charAt(x) - '0'];
+	    checkSum += (int)zip.charAt(x)- '0';
+	}
+	return ans + a[checkSum % 10] + "|";
     }
 
     public static String toZip(String code) {
@@ -52,32 +48,33 @@ public class Barcode implements Comparable<Barcode>{
 	    code.charAt(31) != '|') {
 	    throw new IllegalArgumentException();
 	}
-	for (int x = 1; x < 22; x += 5) {
-	    if (code.charAt(x) != '|'  || code.charAt(x) != ':') {
-		throw new IllegalArgumentException();
-	    }
-	    for (int i = 0; i < a.length; i++) {
-		if ((i == 9) && (!code.substring(x, x + 6).equals(a[i]))) {
-		    throw new IllegalArgumentException();
-		} 
-		else if (code.substring(x, x + 6).equals(a[i])) {
-		    ans += i;
+	int check = 0;
+	int checkSum = 0;
+	String zip = "";
+	for (int x = 1; x < 31; x += 5) {
+	    for (int key = 0; key < 10; key++) {
+		if (code.substring(x, x + 5).equals(a[key])) {
+		    if (x < 25) {
+			zip += key;
+			check += key;
+		    }
+		    else checkSum = key;
 		}
 	    }
 	}
-	if (code.substring(26, 31).equals(code.checkSum(ans))) {
-	    return ans;
+	
+	if (checkSum != check % 10) {
+	    throw new IllegalArgumentException();
 	}
-	else throw new IllegalArgumentException();
-    }
-	    
+	return zip;
+    }	    
 
     public String toString() {
 	return getCode() + " (" + zip + ")";
     }
 
     public int compareTo(Barcode b) {
-	return (int)getZip().compareTo((int)b.getZip());
+	return getZip().compareTo(b.getZip());
     }
 
     public boolean equals(Barcode b) {
