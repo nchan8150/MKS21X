@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Sorts {
     public static String name(){
-	return "01.Chan.Nicholas";
+	return "10.Chan.Nicholas";
     }
 
     public static boolean isSorted(int[]ary){                                   
