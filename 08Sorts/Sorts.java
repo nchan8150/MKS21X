@@ -14,6 +14,12 @@ public class Sorts {
         return true;                                                           
     }
     
+    public static void swap (int[] ary, int a, int b) {
+	int c = ary[a];
+	ary[a] = ary[b];
+	ary[b] = c;
+    }
+    
     public static void selectionSort(int[] data) {
 	for (int x = 0; x < data.length - 1; x++) {
 	    int lowest = x;
@@ -40,14 +46,23 @@ public class Sorts {
 	}
     }
 
-     /* Probably useful in future
-    public static void swap (int[] ary, int a, int b) {
-	int c = ary[a];
-	ary[a] = ary[b];
-	ary[b] = c;
+    public static void bubbleSort(int[] data) {
+	for (int i = data.length - 1; i > 0; i--) {
+	    int numSwaps = 0;
+	    for (int x = 0; x < data.length - 1; x++) {
+		if (data[x] > data[x + 1]) {
+		    swap(data, x, x+1);
+		    numSwaps++;
+		}
+	    }
+	    if (numSwaps == 0) {
+		return;
+	    } 
+	}
     }
-     */
-    /*
+
+     
+    /* 
     public static void main(String[]args){                                      
         int[] randish = new int[15];                                            
         for(int i = 0 ; i < randish.length; i++){                               
@@ -55,10 +70,11 @@ public class Sorts {
         }                                         
         System.out.println(name());
         System.out.println(Arrays.toString(randish));                           
-        selectionSort(randish);                                                 
+        bubbleSort(randish);                                                 
         System.out.println(Arrays.toString(randish));                           
     } 
-    */                                      
+    */
+                                        
     
 }
 
