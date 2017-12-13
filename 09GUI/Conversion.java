@@ -12,7 +12,7 @@ public class Conversion extends JFrame implements ActionListener{
 	return (t - 32) * 5 / 9;
     }
     
-    private Container pane;
+    private Conttainer pane;
     private Jbutton fb;
     private JTextField ft;
     private Jbutton cb;
@@ -35,8 +35,7 @@ public class Conversion extends JFrame implements ActionListener{
 	pane.add(ft);
 	pane.add(cb);
 	pane.add(ct);
-    }
-}
+ }
     
     /*
     public static void main(String[] args) {
