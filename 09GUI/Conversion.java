@@ -12,10 +12,20 @@ public class Conversion extends JFrame implements ActionListener{
     public void actionPerformed (ActionEvent e) {
 	String s = e.getActionCommand();
 	if (s.equals("Convert from F to C")) {
-	    System.out.println(FtoC(Double.parseDouble(t.getText())));
+	    try {
+		System.out.println(FtoC(Double.parseDouble(t.getText())));
+	    }
+	    catch (NumberFormatException n) {
+		System.out.println("Enter a number");
+	    }
 	}
 	else if (s.equals("Convert from C to F")) {
-	    System.out.println(CtoF(Double.parseDouble(t.getText())));
+	    try {
+		System.out.println(CtoF(Double.parseDouble(t.getText())));
+	    }
+	    catch (NumberFormatException n) {
+		System.out.println("Enter a number");
+	    }
 	}
     }
 	    
