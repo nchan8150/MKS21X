@@ -1,4 +1,4 @@
-//Worked with Il Kyu to figure it out
+ //Worked with Il Kyu to figure it out
 
 public class SuperArray{
     private int size;
@@ -42,7 +42,6 @@ public class SuperArray{
     public String get(int index){
 	if(index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
-
 	}
 	return data[index];
     }
@@ -50,7 +49,6 @@ public class SuperArray{
     public String set(int index, String element){
 	if(index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
-
 	}
 	String oldString = data[index];
 	data[index] = element;
@@ -95,12 +93,14 @@ public class SuperArray{
     }
 
     public void add(int index, String element){
-	resize();
+	if(data.length == size) {
+	    resize();
+	}
 	if(index < 0 || index > size){
-	    System.out.println("Error: Index out of bounds");
+	    throw new IndexOutOfBoundsException();
 	}
 	else{   
-	    for(int count = size; count >= index; count--){
+	    for(int count = size; count > index; count--){
 		data[count + 1] = data[count];
 	    }
 	    data[index] = element;
