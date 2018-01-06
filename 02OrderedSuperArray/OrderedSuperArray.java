@@ -1,4 +1,4 @@
-//some inspiation from peter
+//I ACQUIRED ASSISTANCE FROM MASTER PETER
 public class OrderedSuperArray extends SuperArray {
     public OrderedSuperArray() {
 	super();
