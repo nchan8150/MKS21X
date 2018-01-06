@@ -8,7 +8,11 @@ public class SuperArray{
 	data = new String[10];
 	size = 0;
     }
-
+    
+    public SuperArray(int startCap) {
+	data = new String[startCap];
+    }
+    
     public void clear(){
 	data = new String[10];
 	size = 0;
@@ -30,13 +34,14 @@ public class SuperArray{
     }
 
     public String toString(){
-	int index = 0;
+	if (size == 0) {
+	    return "[]";
+	}
 	String returnString = "[";
-	for(; index + 1 < size; index++){
+	for(int index = 0; index < size() - 1; index++){
 	    returnString += data[index] + ",";
 	}
-	returnString += " " + data[index] + "]";
-	return returnString;
+	return returnString + data[size() - 1] + "]";
     }
 
     public String get(int index){
@@ -56,18 +61,16 @@ public class SuperArray{
     }
 
     private void resize(){
-	if(data.length == size){
-	    String[] newData = new String [size * 2];
-	    for(int index = 0; index < size; index++){
-		newData[index] = data[index];
-	    }
-	    data = newData;
+	String[] newData = new String[size * 2];
+	for(int index = 0; index < size; index++){
+	    newData[index] = data[index];
 	}
+	data = newData;
     }
 
     public boolean contains(String target){
 	for(int i = 0; i < size; i++){
-	    if(data[i] == target){
+	    if(data[i].equals(target)){
 		return true;
 	    }
 	}
@@ -76,7 +79,7 @@ public class SuperArray{
 
     public int indexOf(String element){
 	for (int i = 0; i < size; i++){
-	    if(data[i] == element){
+	    if(data[i].equals(element)){
 		return i;
 	    }
 	}
@@ -84,8 +87,8 @@ public class SuperArray{
     }
 
     public int lastIndexOf(String element){  
-	for(int i = size; i >= 0; i--){
-	    if(data[i] == element){
+	for(int i = size - 1; i >= 0; i--){
+	    if(data[i].equals(element)){
 		return i;
 	    }
 	}
@@ -93,15 +96,13 @@ public class SuperArray{
     }
 
     public void add(int index, String element){
-	if(data.length == size) {
-	    resize();
-	}
-	if(index < 0 || index > size){
+	if(index < 0 || index > size()){
 	    throw new IndexOutOfBoundsException();
 	}
-	else{   
-	    for(int count = size; count > index; count--){
-		data[count + 1] = data[count];
+	else {
+	    resize();
+	    for (int x = size; x > index; x--) {
+		data[x] = data[x-1];
 	    }
 	    data[index] = element;
 	    size++;
