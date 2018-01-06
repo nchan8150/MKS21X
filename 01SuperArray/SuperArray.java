@@ -1,4 +1,5 @@
- //Worked with Il Kyu to figure it out
+//Worked with Il Kyu to figure it out
+//Had help from jerry because it kept getting worse when I tried to fix it.
 
 public class SuperArray{
     private int size;
@@ -6,7 +7,6 @@ public class SuperArray{
 
     public SuperArray(){
 	data = new String[10];
-	size = 0;
     }
     
     public SuperArray(int startCap) {
@@ -14,7 +14,7 @@ public class SuperArray{
     }
     
     public void clear(){
-	data = new String[10];
+	data = new String[data.length];
 	size = 0;
     }
 
@@ -34,25 +34,30 @@ public class SuperArray{
     }
 
     public String toString(){
-	if (size == 0) {
+	if (isEmpty()) {
 	    return "[]";
 	}
 	String returnString = "[";
-	for(int index = 0; index < size() - 1; index++){
-	    returnString += data[index] + ",";
+	for(int index = 0; index < size; index++){
+	    if (data[index] != null) {
+		returnString += data[index] + ",";
+	    }
 	}
-	return returnString + data[size() - 1] + "]";
+	return returnString.substring(0, returnString.length() - 1) + "]";
     }
 
     public String get(int index){
-	if(index < 0 || index >= size){
+	if(index == 0 && size() == 0) {
+	    return "";
+	}
+	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException();
 	}
 	return data[index];
     }
 
     public String set(int index, String element){
-	if(index < 0 || index >= size){
+	if(index < 0 || index > size() || element.equals("")){
 	    throw new IndexOutOfBoundsException();
 	}
 	String oldString = data[index];
@@ -61,11 +66,13 @@ public class SuperArray{
     }
 
     private void resize(){
-	String[] newData = new String[size * 2];
-	for(int index = 0; index < size; index++){
-	    newData[index] = data[index];
-	}
-	data = newData;
+	 if (size == data.length) {
+            String[] temp = new String[data.length + data.length + 1];
+            for (int index = 0; index < data.length; index ++) {
+            temp[index] = data[index];
+            }
+            data = temp;
+        }
     }
 
     public boolean contains(String target){
@@ -87,7 +94,7 @@ public class SuperArray{
     }
 
     public int lastIndexOf(String element){  
-	for(int i = size - 1; i >= 0; i--){
+	for(int i = size - 1; i > 0; i--){
 	    if(data[i].equals(element)){
 		return i;
 	    }
@@ -123,16 +130,14 @@ public class SuperArray{
     }
 
     public boolean remove(String element){
-	int count;
-	for(count = 0; data[count] != element; count++){
-	    if(count == size){
-		return false;
+	if(indexOf(element) != 1) {
+	    for (int x = indexOf(element); x < size; x++) {
+		data[x] = data[x+ 1];
 	    }
+	    size--;
+	    return true;
 	}
-	for(int newC = count; count < size; count++){
-	    data[count] = data[count + 1];
-	}
-	size--;
-	return true;
+	return false;
     }
+
 }
