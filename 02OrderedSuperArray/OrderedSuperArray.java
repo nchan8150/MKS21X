@@ -1,4 +1,4 @@
-//I ACQUIRED ASSISTANCE FROM MASTER PETER
+//I ACQUIRED ASSISTANCE FROM LORD PETER
 public class OrderedSuperArray extends SuperArray {
     public OrderedSuperArray() {
 	super();
