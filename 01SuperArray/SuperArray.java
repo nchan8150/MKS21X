@@ -1,5 +1,6 @@
 //Worked with Il Kyu to figure it out
 //Had help from jerry because it kept getting worse when I tried to fix it.
+import java.util.*;
 
 public class SuperArray{
     private int size;

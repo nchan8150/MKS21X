@@ -1,3 +1,4 @@
+//some inspiation from peter
 public class OrderedSuperArray extends SuperArray {
     public OrderedSuperArray() {
 	super();
@@ -8,7 +9,10 @@ public class OrderedSuperArray extends SuperArray {
     }
 
     public OrderedSuperArray (String[] ary) {
-	super(ary);
+	super();
+	for (int i = 0; i < ary.length; i++) {
+	    add(ary[i]);
+	}
     }
     
     public void add(int index, String value) {
@@ -16,36 +20,36 @@ public class OrderedSuperArray extends SuperArray {
     }
 
     public boolean add (String value) {
-	if (size() == 0) {
-	    super.add(value);
+	if (this.size() == 0) {
+	    super.add(0, value);
 	    return true;
 	}
 	else {
-	    super.add(findIndexBinary(value), value);
-	    return true;
+	    super.add(this.findIndexBinary(value), value);
 	}
+	return true;
     }
  
     private int indexOfBinary (String element) {
 	int min = 0;
-	int max = super.size() - 1;
+	int max = size() - 1;
 	int middle = 0;
-	while (min <= max) {
+	if(size() <= 0) {
+	    return -1;
+	}
+	while (min != max) {
 	    middle = (min + max) / 2;
-	    if (element.compareTo(get(middle)) < 0) {
-                max = middle - 1;
+	    if (super.get(middle).compareTo(element) == 0) {
+                middle = max;
             }
-	    else if (element.compareTo(get(middle)) > 0) {
+	    else if (super.get(middle).compareTo(element) < 0) {
 		min = middle + 1;
 	    }
 	    else {
-		while (get(middle - 1)==get(middle)){
-		    middle -= 1;
-		}
-                return middle;
+		max = middle; 
             }
         }
-        return -1;
+        return min;
     }
 
     private int findIndex (String element) {
@@ -59,16 +63,23 @@ public class OrderedSuperArray extends SuperArray {
 
     private int findIndexBinary (String element) {
 	int min = 0;
-	int max = size() - 1;
+	int max = size();
 	int middle = 0;
+	if(size() == 0) {
+	    return 0;
+	}
 	while (min != max) {
 	    middle = (min + max) / 2;
-	    if (element.compareTo(get(middle)) <= 0) {
+	    if (element.compareTo(super.get(middle)) <= 0) {
 		max = middle;
 	    }
 	    else min = middle + 1;
 	}
 	return min;
+    }
+
+     public String set(int i, String value) {
+	throw new UnsupportedOperationException();
     }
 }
 	

@@ -1,4 +1,7 @@
 //Worked with Il Kyu to figure it out
+//Had help from jerry because it kept getting worse when I tried to fix it.
+
+import java.util.*;
 
 public class SuperArray{
     private int size;
@@ -6,11 +9,14 @@ public class SuperArray{
 
     public SuperArray(){
 	data = new String[10];
-	size = 0;
     }
-
+    
+    public SuperArray(int startCap) {
+	data = new String[startCap];
+    }
+    
     public void clear(){
-	data = new String[10];
+	data = new String[data.length];
 	size = 0;
     }
 
@@ -30,27 +36,31 @@ public class SuperArray{
     }
 
     public String toString(){
-	int index = 0;
-	String returnString = "[";
-	for(; index + 1 < size; index++){
-	    returnString += data[index] + ",";
+	if (isEmpty()) {
+	    return "[]";
 	}
-	returnString += " " + data[index] + "]";
-	return returnString;
+	String returnString = "[";
+	for(int index = 0; index < size; index++){
+	    if (data[index] != null) {
+		returnString += data[index] + ",";
+	    }
+	}
+	return returnString.substring(0, returnString.length() - 1) + "]";
     }
 
     public String get(int index){
-	if(index < 0 || index >= size){
-	    System.out.println("Error: Index out of bounds");
+	if(index == 0 && size() == 0) {
 	    return "";
+	}
+	if(index < 0 || index >= size()){
+	    throw new IndexOutOfBoundsException();
 	}
 	return data[index];
     }
 
     public String set(int index, String element){
-	if(index < 0 || index >= size){
-	    System.out.println("Error: Index out of bounds");
-	    return "";
+	if(index < 0 || index > size() || element.equals("")){
+	    throw new IndexOutOfBoundsException();
 	}
 	String oldString = data[index];
 	data[index] = element;
@@ -58,18 +68,18 @@ public class SuperArray{
     }
 
     private void resize(){
-	if(data.length == size){
-	    String[] newData = new String [size * 2];
-	    for(int index = 0; index < size; index++){
-		newData[index] = data[index];
-	    }
-	    data = newData;
-	}
+	 if (size == data.length) {
+            String[] temp = new String[data.length + data.length + 1];
+            for (int index = 0; index < data.length; index ++) {
+            temp[index] = data[index];
+            }
+            data = temp;
+        }
     }
 
     public boolean contains(String target){
 	for(int i = 0; i < size; i++){
-	    if(data[i] == target){
+	    if(data[i].equals(target)){
 		return true;
 	    }
 	}
@@ -78,7 +88,7 @@ public class SuperArray{
 
     public int indexOf(String element){
 	for (int i = 0; i < size; i++){
-	    if(data[i] == element){
+	    if(data[i].equals(element)){
 		return i;
 	    }
 	}
@@ -86,8 +96,8 @@ public class SuperArray{
     }
 
     public int lastIndexOf(String element){  
-	for(int i = size; i >= 0; i--){
-	    if(data[i] == element){
+	for(int i = size - 1; i > 0; i--){
+	    if(data[i].equals(element)){
 		return i;
 	    }
 	}
@@ -95,13 +105,13 @@ public class SuperArray{
     }
 
     public void add(int index, String element){
-	resize();
-	if(index < 0 || index > size){
-	    System.out.println("Error: Index out of bounds");
+	if(index < 0 || index > size()){
+	    throw new IndexOutOfBoundsException();
 	}
-	else{   
-	    for(int count = size; count >= index; count--){
-		data[count + 1] = data[count];
+	else {
+	    resize();
+	    for (int x = size; x > index; x--) {
+		data[x] = data[x-1];
 	    }
 	    data[index] = element;
 	    size++;
@@ -110,8 +120,8 @@ public class SuperArray{
 
     public String remove(int index){
 	if(index < 0 || index >= size){
-	    System.out.println("Error: Index out of bounds");
-	    return "";
+	     throw new IndexOutOfBoundsException();
+
 	}
 	String removed = data[index];
 	for(int x = index; x < size; x++){
@@ -122,16 +132,14 @@ public class SuperArray{
     }
 
     public boolean remove(String element){
-	int count;
-	for(count = 0; data[count] != element; count++){
-	    if(count == size){
-		return false;
+	if(indexOf(element) != 1) {
+	    for (int x = indexOf(element); x < size; x++) {
+		data[x] = data[x+ 1];
 	    }
+	    size--;
+	    return true;
 	}
-	for(int newC = count; count < size; count++){
-	    data[count] = data[count + 1];
-	}
-	size--;
-	return true;
+	return false;
     }
+
 }
